@@ -1,4 +1,4 @@
-#include "game.h"
+#include "../include/game.h"
 
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;

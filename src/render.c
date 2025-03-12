@@ -1,15 +1,18 @@
-#include "render.h"
+#include "../include/render.h"
 
-void render(void)
-{
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); /* Set background to black */
-    SDL_RenderClear(renderer); /* Clear screen */
+void render(void) {
+    SDL_Rect rect;
 
-    /* Draw a red rectangle (a placeholder for a player or object) */
-    SDL_Rect rect = {SCREEN_WIDTH / 2 - 25, SCREEN_HEIGHT / 2 - 25, 50, 50};
+    rect.x = SCREEN_WIDTH / 2 - 25;
+    rect.y = SCREEN_HEIGHT / 2 - 25;
+    rect.w = 50;
+    rect.h = 50;
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderFillRect(renderer, &rect);
-
-    SDL_RenderPresent(renderer); /* Update screen */
+    SDL_RenderPresent(renderer);
 }
 
