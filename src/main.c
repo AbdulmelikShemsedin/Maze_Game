@@ -1,15 +1,24 @@
-#include <stdio.h>
-#include <SDL2/SDL.h>
-#include "../include/game.h"
+#include "../include/header.h"
+
+
+bool GameRunning = true;
+
+/*
+ * main - main function
+ *
+ * Return: 0
+ */
 
 int main(void)
 {
-    if (!initSDL())  /* Initialize SDL */
-        return 1;
+	if (!initializeWindow())
+		return 1;
 
-    gameLoop();  /* Run the game loop */
-
-    cleanup();  /* Clean up resources */
-    return 0;
+	while (GameRunning)
+	{
+		userInput();
+	}
+	destroyWindow();
+	return 0;
 }
 
