@@ -23,7 +23,9 @@ void setup_game(void)
 int main(void)
 {
 	if (!initializeWindow())
+	{
 		return 1;
+	}
 	setup_game();
 
 	while (GameRunning)
@@ -33,6 +35,8 @@ int main(void)
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
+
+		renderMap();
 
 		renderPlayer();
 		SDL_RenderPresent(renderer);

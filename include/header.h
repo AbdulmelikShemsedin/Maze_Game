@@ -8,6 +8,9 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define PI 3.14159265
+#define MAP_NUM_ROWS 13
+#define MAP_NUM_COLS 20
+#define TILE_SIZE 64
 
 typedef struct player_s
 {
@@ -34,6 +37,7 @@ void destroyWindow(void);
 void renderPlayer(void);
 void movePlayer();
 float calculateDeltaTime(void);
-void clearColorBuffer(color_s color);
-
+void renderMap(void);
+int getMapValue(int row, int col);
+void drawRect(int x, int y, int width, int height, color_s color);
 #endif
