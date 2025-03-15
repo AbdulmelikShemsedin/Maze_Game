@@ -1,15 +1,47 @@
-#include <stdio.h>
-#include <SDL2/SDL.h>
-#include "../include/game.h"
+#include "../include/header.h"
+
+
+bool GameRunning = true;
+void setup_game(void)
+{
+
+	player.x = SCREEN_WIDTH / 2;
+	player.y = SCREEN_HEIGHT / 2;
+	player.width = 10;
+	player.height = 30;
+	player.walkDirection = 0;
+	player.walkSpeed = 100;
+}
+
+
+/*
+ * main - main function
+ *
+ * Return: 0
+ */
 
 int main(void)
 {
-    if (!initSDL())  /* Initialize SDL */
-        return 1;
+	if (!initializeWindow())
+	{
+		return 1;
+	}
+	setup_game();
 
-    gameLoop();  /* Run the game loop */
+	while (GameRunning)
+	{
+		getPlayerInput();
+		movePlayer();
 
-    cleanup();  /* Clean up resources */
-    return 0;
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_RenderClear(renderer);
+
+		renderMap();
+
+		renderPlayer();
+		SDL_RenderPresent(renderer);
+	}
+	destroyWindow();
+	return 0;
 }
 
