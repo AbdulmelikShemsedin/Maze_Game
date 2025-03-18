@@ -23,6 +23,7 @@ int initializeWindow(void)
         if (!window)
         {
                 printf("Window Creation Failed: %s\n", SDL_GetError());
+                SDL_Quit();
                 return 0;
         }
 
@@ -30,8 +31,15 @@ int initializeWindow(void)
         if (!renderer)
         {
                 printf("Renderer Creation Failed: %s\n", SDL_GetError());
+                SDL_Quit();
                 return 0;
         }
+
+        if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
+	{
+		printf("Failed to initialize SDL_image.\n", SDL_GetError());
+		return (0);
+	}
 
         return 1;
 }
