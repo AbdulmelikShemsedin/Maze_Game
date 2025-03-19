@@ -1,59 +1,39 @@
 #include "../include/header.h"
 
-player_s player;
+
 /**
- * movePlayer - set the next position of the player
- * 
-*/
-
-void movePlayer()
-{
-	float frameTime = calculateDeltaTime();
-	float moveStep, newPlayerX, newPlayerY;
-
-	moveStep = player.walkDirection * player.walkSpeed * frameTime;
-
-	newPlayerX = player.x +  moveStep;
-	newPlayerY = player.y + moveStep;
-	player.x = newPlayerX;
-	player.y = newPlayerY;	
-}
-
-/*
- * calculateDeltaTime - Calculates the time elapsed since the last frame.
- *
- * This function computes the delta time (Δt) in seconds by measuring
- * the difference between the current frame time and the previous frame time.
- * Delta time is used to ensure smooth, frame-rate independent movement.
- *
- *
- * Return: The elapsed time (Δt) in seconds as a float.
+ * move_player - Update the player's position based on movement input.
+ * @delta_time: Time elapsed since the last frame.
  */
-float calculateDeltaTime(void)
+void move_player(float delta_time)
 {
-    static Uint32 lastFrameTime = 0;
-    Uint32 currentFrameTime = SDL_GetTicks();
-    float deltaTime = (currentFrameTime - lastFrameTime) / 1000.0f;
-    lastFrameTime = currentFrameTime;
-    return deltaTime;
+	float move_step, new_player_x, new_player_y;
+
+	player.rotation_angle += player.turn_direction * player.turn_speed * delta_time;
+	move_step = player.walk_direction * player.walk_speed * delta_time;
+
+	new_player_x = player.x + cos(player.rotation_angle) * move_step;
+	new_player_y = player.y + sin(player.rotation_angle) * move_step;
+
+	if (!detect_collision(new_player_x, new_player_y))
+	{
+		player.x = new_player_x;
+		player.y = new_player_y;
+	}
 }
 
 /**
- * renderPlayer - render the player
+ * renderPlayer - render the player on the screen
  *
 */
 
-
-void renderPlayer(void) {
-
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
-    SDL_Rect playerRect = {
-        (int)player.x,
-        (int)player.y,
-	(int)player.width,
-        (int)player.height
-    };
-
-    SDL_RenderFillRect(renderer, &playerRect);
+void render_player(void)
+{
+	draw_rect(
+		player.x ,
+		player.y ,
+		player.width,
+		player.height,
+		0xFFFFFFFF
+	);
 }
