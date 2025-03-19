@@ -1,7 +1,15 @@
 #include "../include/header.h"
 
+bool game_running = false;
+int ticks_last_frame;
+player_t player;
 
-bool GameRunning = true;
+
+/**
+ * setup_game - initialize player variables and load wall textures
+ *
+*/
+
 void setup_game(void)
 {
 
@@ -9,39 +17,58 @@ void setup_game(void)
 	player.y = SCREEN_HEIGHT / 2;
 	player.width = 10;
 	player.height = 30;
-	player.walkDirection = 0;
-	player.walkSpeed = 100;
+	player.walk_direction = 0;
+	player.walk_speed = 70;
+	player.turn_direction = 0;
+	player.turn_speed = 45 * (PI / 180);
+	player.rotation_angle = PI ;
 }
 
 
-/*
- * main - main function
- *
- * Return: 0
+/**
+ * update_game - Updates the game state, including delta time, player movement, and ray casting.
  */
+void update_game(void)
+{
+	float delta_time;
+	int time_to_wait = FRAME_TIME_LENGTH - (SDL_GetTicks() - ticks_last_frame);
 
+	if (time_to_wait > 0 && time_to_wait <= FRAME_TIME_LENGTH)
+	{
+		SDL_Delay(time_to_wait);
+	}
+
+	delta_time = (SDL_GetTicks() - ticks_last_frame) / 1000.0f;
+	ticks_last_frame = SDL_GetTicks();
+
+	move_player(delta_time);
+	cast_all_rays();
+}
+
+
+/**
+ * main - Entry point of the program.
+ *
+ * Return: 0 on successful execution.
+ */
 int main(void)
 {
-	if (!initializeWindow())
-	{
-		return 1;
-	}
+	game_running = initialize_window();
+
 	setup_game();
 
-	while (GameRunning)
+	while (game_running)
 	{
-		getPlayerInput();
-		movePlayer();
+		user_input();
+		update_game();
+		clear_color_buffer(0xFF000000);
 
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-		SDL_RenderClear(renderer);
-
-		renderMap();
-
-		renderPlayer();
-		SDL_RenderPresent(renderer);
+		render_map();
+		render_rays();
+		render_player();
+		
+		render_color_buffer();
 	}
-	destroyWindow();
-	return 0;
+	destroy_window();
+	return (0);
 }
-
