@@ -27,7 +27,7 @@
 typedef uint32_t color_t;
 
 extern bool game_running;
-
+extern bool show_map;
 void user_input(void);
 bool initialize_window(void);
 void destroy_window(void);
@@ -109,4 +109,7 @@ void render_rays(void);
 void horz_intersection(float ray_angle);
 void vert_intersection(float ray_angle);
 
+
+void render_wall(void);
 #endif
+

@@ -1,5 +1,7 @@
 #include "../include/header.h"
 
+ bool show_map = false;
+
 /**
  * SDL_KEYDOWN_FUNC - process input when a key is down
  * @event: union that contains structures for the different event types
@@ -7,6 +9,7 @@
 
 void SDL_KEYDOWN_FUNC(SDL_Event event)
 {
+
 	if (event.key.keysym.sym == SDLK_ESCAPE)
 		game_running = false;
 	if (event.key.keysym.sym == SDLK_UP)
@@ -34,6 +37,8 @@ void SDL_KEYUP_FUNC(SDL_Event event)
 		player.turn_direction = 0;
 	if (event.key.keysym.sym == SDLK_LEFT)
 		player.turn_direction = 0;
+	if (event.key.keysym.sym == SDLK_m)
+		show_map = !show_map;
 }
 
 /**
