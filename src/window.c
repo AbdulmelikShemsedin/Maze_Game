@@ -37,21 +37,54 @@ bool initialize_window(void)
 		return (false);
 	}
 
-        window = SDL_CreateWindow("Maze Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (!window)
-        {
-                printf("Window Creation Failed: %s\n", SDL_GetError());
-                return 0;
-        }
+	SDL_GetCurrentDisplayMode(0, &display_mode);
+	full_screen_width = display_mode.w;
+	full_screen_height = display_mode.h;
 
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-        if (!renderer)
-        {
-                printf("Renderer Creation Failed: %s\n", SDL_GetError());
-                return 0;
-        }
+	window = SDL_CreateWindow(
+			NULL,
+			SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED,
+			full_screen_width,
+			full_screen_height,
+			SDL_WINDOW_BORDERLESS
+			);
+	
+	if (!window)
+	{
+		fprintf(stderr, "Error creating SDL window.\n");
+		return (false);
+	}
 
-        return 1;
+	renderer = SDL_CreateRenderer(window, -1, 1);
+	if (!renderer)
+	{
+		fprintf(stderr, "Error creating SDL renderer.\n");
+		return (false);
+	}
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	color_buffer = malloc(sizeof(color_t) * SCREEN_WIDTH * SCREEN_HEIGHT);
+	if (!color_buffer)
+	{
+		fprintf(stderr, "Error allocating memory for color buffer.\n");
+		return (false);
+	}
+	
+	
+	color_buffer_texture = SDL_CreateTexture(
+			renderer,
+			SDL_PIXELFORMAT_RGBA32,
+			SDL_TEXTUREACCESS_STREAMING,
+			SCREEN_WIDTH,
+			SCREEN_HEIGHT
+			);
+	if (!color_buffer_texture)
+	{
+		fprintf(stderr, "Error creating SDL texture.\n");
+		return (false);
+	}
+
+	return (true);
 }
 /*
  * destroy_window - Cleans up resources and shuts down the SDL window.
