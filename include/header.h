@@ -110,6 +110,7 @@ void render_rays(void);
 void horz_intersection(float ray_angle);
 void vert_intersection(float ray_angle);
 
+
 void renderCeil(void);
 void render_floor(void);
 void render_wall(void);

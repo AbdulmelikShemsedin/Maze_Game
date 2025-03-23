@@ -37,6 +37,7 @@ void render_wall(void)
 
 
 
+
                 for (y = wall_top_pixel; y < wall_bottom_pixel; y++)
                 {
 

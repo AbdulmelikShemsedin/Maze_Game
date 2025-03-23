@@ -62,6 +62,7 @@ int main(void)
 		user_input();
 		update_game();
 		clear_color_buffer(0xFF000000);
+
 		render_floor();
 		renderCeil();
 		render_wall();
