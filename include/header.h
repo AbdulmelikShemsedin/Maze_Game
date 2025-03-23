@@ -22,7 +22,7 @@
 #define FRAME_TIME_LENGTH (1000 / FPS)
 #define MAP_NUM_ROWS 15
 #define MAP_NUM_COLS 20
-
+#define SCALE_FACTOR 0.2
 
 typedef uint32_t color_t;
 
@@ -110,6 +110,8 @@ void horz_intersection(float ray_angle);
 void vert_intersection(float ray_angle);
 
 
+void renderCeil(void);
+void render_floor(void);
 void render_wall(void);
 #endif
 

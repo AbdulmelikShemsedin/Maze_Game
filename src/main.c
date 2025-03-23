@@ -15,8 +15,8 @@ void setup_game(void)
 
 	player.x = SCREEN_WIDTH / 2;
 	player.y = SCREEN_HEIGHT / 2;
-	player.width = 10;
-	player.height = 30;
+	player.width = 1.5;
+	player.height = 3.5;
 	player.walk_direction = 0;
 	player.walk_speed = 70;
 	player.turn_direction = 0;
@@ -62,6 +62,9 @@ int main(void)
 		user_input();
 		update_game();
 		clear_color_buffer(0xFF000000);
+
+		render_floor();
+		renderCeil();
 		render_wall();
 		if (show_map)
 		{

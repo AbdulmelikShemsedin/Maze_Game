@@ -29,8 +29,12 @@ void render_wall(void)
                 if (wall_bottom_pixel > SCREEN_HEIGHT)
                         wall_bottom_pixel = SCREEN_HEIGHT;
 
+			
+                if (rays[x].was_hit_vertical)
+			wall_color = 0xAAAAAA;
+		else
+			wall_color = 0xCCCCCC;
 
-                wall_color = 0xAAAAAA;
 
 
 

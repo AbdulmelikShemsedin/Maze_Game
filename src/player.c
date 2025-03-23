@@ -30,8 +30,8 @@ void move_player(float delta_time)
 void render_player(void)
 {
 	draw_rect(
-		player.x ,
-		player.y ,
+		player.x * SCALE_FACTOR,
+		player.y * SCALE_FACTOR,
 		player.width,
 		player.height,
 		0xFFFFFFFF

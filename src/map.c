@@ -29,17 +29,15 @@ static const int map[MAP_NUM_ROWS][MAP_NUM_COLS] = {
  */
 bool detect_collision(float x, float y)
 {
-	int grid_x, grid_y;
+	int map_x, map_y;
 
-	if (x < 0 || x >= MAP_NUM_COLS * TILE_SIZE ||
-			y < 0 || y >= MAP_NUM_ROWS * TILE_SIZE)
-	{
+	if (!is_inside_map(x, y))
 		return (true);
-	}
 
-	grid_x = floor(x / TILE_SIZE);
-	grid_y = floor(y / TILE_SIZE);
-	return (map[grid_y][grid_x] != 0);
+	map_x = (int)(x / TILE_SIZE);
+	map_y = (int)(y / TILE_SIZE);
+
+	return (map[map_y][map_x] != 0);
 }
 
 /**
@@ -51,47 +49,49 @@ bool detect_collision(float x, float y)
  */
 bool is_inside_map(float x, float y)
 {
-	return (x >= 0 && x <= MAP_NUM_COLS * TILE_SIZE &&
-			y >= 0 && y <= MAP_NUM_ROWS * TILE_SIZE);
+	return (x >= 0 && x < MAP_NUM_COLS * TILE_SIZE &&
+			y >= 0 && y < MAP_NUM_ROWS * TILE_SIZE);
 }
 /**
  * get_map_value - Retrieve the value at a specific position in the map.
  * @row: The row index in the map.
  * @col: The column index in the map.
  *
- * Return: The value at the specified map position.
+ * Return: The value at the specified map position.(0 for empty space, 1 for wall, etc.)
  */
 
 int get_map_value(int row, int col)
 {
+	if (row < 0 || row >= MAP_NUM_ROWS || col < 0 || col >= MAP_NUM_COLS)
+		return (-1);
 
 	return (map[row][col]);
 
 }
 
 /**
- * renderMap - render the map grid.
+ * render_map - Renders the map with walls and open spaces.
  *
 */
 
 void render_map(void)
 {
-	int i, j, tile_x, tile_y;
+	int row, col, tile_x, tile_y;
 	color_t tile_color;
 
-	for (i = 0; i < MAP_NUM_ROWS; i++)
+	for (row = 0; row < MAP_NUM_ROWS; row++)
 	{
-		for (j = 0; j < MAP_NUM_COLS; j++)
+		for (col = 0; col < MAP_NUM_COLS; col++)
 		{
-			tile_x = j * TILE_SIZE;
-			tile_y = i * TILE_SIZE;
-			tile_color = map[i][j] != 0 ? 0xFFFFFFFF : 0x00000000;
+			tile_x = col * TILE_SIZE * SCALE_FACTOR;
+			tile_y = row * TILE_SIZE * SCALE_FACTOR;
+			tile_color = map[row][col] != 0 ? 0xFFFFFFFF : 0x00000000;
 
 			draw_rect(
 				tile_x ,
 				tile_y,
-				TILE_SIZE,
-				TILE_SIZE,
+				TILE_SIZE * SCALE_FACTOR,
+				TILE_SIZE * SCALE_FACTOR,
 				tile_color
 			);
 		}

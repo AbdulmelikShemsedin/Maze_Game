@@ -113,9 +113,9 @@ void cast_ray(float ray_angle, int strip_id)
 {
 	float horz_hit_distance, vert_hit_distance;
 
-	ray_angle = remainder(ray_angle, TWO_PI);
+	ray_angle = fmod(ray_angle, TWO_PI);
 	if (ray_angle < 0)
-		ray_angle = TWO_PI + ray_angle;
+		ray_angle += TWO_PI;
 
 	horz_intersection(ray_angle);
 	vert_intersection(ray_angle);
@@ -135,7 +135,6 @@ void cast_ray(float ray_angle, int strip_id)
 		rays[strip_id].wall_hit_y = vert_wall_hit_y;
 		rays[strip_id].wall_hit_content = vert_wall_content;
 		rays[strip_id].was_hit_vertical = true;
-		rays[strip_id].ray_angle = ray_angle;
 	}
 	else
 	{
@@ -144,8 +143,11 @@ void cast_ray(float ray_angle, int strip_id)
 		rays[strip_id].wall_hit_y = horz_wall_hit_y;
 		rays[strip_id].wall_hit_content = horz_wall_content;
 		rays[strip_id].was_hit_vertical = false;
-		rays[strip_id].ray_angle = ray_angle;
 	}
+	 rays[strip_id].distance *= cos(ray_angle - player.rotation_angle);
+
+    /* Store ray angle */
+    rays[strip_id].ray_angle = ray_angle;
 }
 
 
@@ -178,10 +180,10 @@ void render_rays(void)
 	for (i = 0; i < NUM_RAYS; i += 50)
 	{
 		draw_line(
-			player.x,
-			player.y,
-			rays[i].wall_hit_x,
-			rays[i].wall_hit_y,
+			player.x * SCALE_FACTOR,
+			player.y * SCALE_FACTOR,
+			rays[i].wall_hit_x * SCALE_FACTOR,
+			rays[i].wall_hit_y * SCALE_FACTOR,
 			0xFF0000FF
 		);
 	}

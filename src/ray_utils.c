@@ -33,7 +33,7 @@ bool is_ray_facing_down(float angle)
 
 bool is_ray_facing_up(float angle)
 {
-	return (angle <= 0 && angle <= PI);
+	return (!is_ray_facing_down(angle));
 }
 
 /**
