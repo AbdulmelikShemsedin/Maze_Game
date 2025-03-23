@@ -23,6 +23,7 @@
 #define MAP_NUM_ROWS 15
 #define MAP_NUM_COLS 20
 #define SCALE_FACTOR 0.2
+#define MAX_RAINDROPS 300
 
 typedef uint32_t color_t;
 
@@ -112,5 +113,23 @@ void vert_intersection(float ray_angle);
 void renderCeil(void);
 void render_floor(void);
 void render_wall(void);
+
+
+
+
+typedef struct raindrop_s {
+    float x, y;
+    float speed;
+    int length;
+    color_t color;
+} raindrop_t;
+
+extern raindrop_t raindrops[MAX_RAINDROPS];
+extern bool rain_active;
+
+void init_rain(void);
+void update_rain();
+void render_rain(void);
+
 #endif
 

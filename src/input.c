@@ -20,6 +20,8 @@ void SDL_KEYDOWN_FUNC(SDL_Event event)
 		player.turn_direction = +1;
 	if (event.key.keysym.sym == SDLK_LEFT)
 		player.turn_direction = -1;
+	if (event.key.keysym.sym == SDLK_r)
+		rain_active = !rain_active;
 }
 
 /**
