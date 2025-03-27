@@ -12,9 +12,9 @@
  * using the formula (SCREEN_WIDTH * y) + x and assigns the given color
  * to that pixel.
  */
-void set_pixel_color(int x, int y, color_t c)
+void set_pixel_color(int x, int y, color_t color)
 {
-	color_buffer[(SCREEN_WIDTH * y) + x] = c;
+	color_buffer[(SCREEN_WIDTH * y) + x] = color;
 }
 
 /**

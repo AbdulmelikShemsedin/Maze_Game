@@ -3,7 +3,7 @@
 bool game_running = false;
 int ticks_last_frame;
 player_t player;
-
+bool rain_active = true;
 
 /**
  * setup_game - initialize player variables and load wall textures
@@ -56,7 +56,7 @@ int main(void)
 	game_running = initialize_window();
 
 	setup_game();
-
+	init_rain();
 	while (game_running)
 	{
 		user_input();
@@ -72,7 +72,11 @@ int main(void)
 			render_rays();
 			render_player();
 		}
-		
+		if (rain_active)
+		{
+			update_rain();
+			render_rain();
+		}
 		
 		render_color_buffer();
 	}
